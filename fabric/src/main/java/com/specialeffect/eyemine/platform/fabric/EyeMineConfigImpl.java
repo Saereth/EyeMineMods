@@ -12,6 +12,7 @@ public class EyeMineConfigImpl {
 	public static void setCustomSpeedFactor(float speed) {
 		EyeMineConfig config = AutoConfig.getConfigHolder(EyeMineConfig.class).getConfig();
 		config.general.customSpeedFactor = speed;
+		AutoConfig.getConfigHolder(EyeMineConfig.class).save();
 	}
 
 	public static boolean getUsingMouseEmulation() {

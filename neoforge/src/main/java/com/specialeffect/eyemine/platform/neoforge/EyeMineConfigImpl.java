@@ -9,6 +9,7 @@ public class EyeMineConfigImpl {
 
 	public static void setCustomSpeedFactor(float speed) {
 		EyeMineConfig.customSpeedFactor.set((double) speed);
+		EyeMineConfig.customSpeedFactor.save();
 	}
 
 	public static boolean getUsingMouseEmulation() {
