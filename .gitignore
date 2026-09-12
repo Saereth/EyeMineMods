@@ -18,9 +18,4 @@ classes/
 .settings
 *.launch
 runs/
-
-# Ignore markdown files except the ones we want tracked
-*.md
-!README.md
-!LICENSE.md
-!CHANGES.md
+/tools/

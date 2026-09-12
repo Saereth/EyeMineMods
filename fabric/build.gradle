@@ -1,4 +1,5 @@
 plugins {
+    id "com.matthewprenger.cursegradle" version "1.4.0"
     id 'multiloader-loader'
     id 'net.fabricmc.fabric-loom'
 }
@@ -38,6 +39,35 @@ loom {
             setConfigName('Fabric Server')
             ideConfigGenerated(true)
             runDir('runs/server')
+        }
+    }
+}
+
+if (System.getenv("CURSEFORGE_TOKEN")) {
+    def cfReleaseType = rootProject.version.toString().contains("alpha") ? "alpha" :
+                        rootProject.version.toString().contains("beta") ? "beta" : "release"
+
+    curseforge {
+        apiKey = System.getenv("CURSEFORGE_TOKEN")
+        project {
+            id = rootProject.curseforge_id
+            changelog = rootProject.file("changes.md").text
+            changelogType = "markdown"
+            releaseType = cfReleaseType
+            addGameVersion rootProject.minecraft_version
+            addGameVersion "Fabric"
+            addGameVersion "Java ${rootProject.java_version}"
+            mainArtifact(tasks.named("jar").get()) {
+                displayName = "eyemine-${rootProject.minecraft_version}-fabric-${rootProject.version.toString()}"
+            }
+            relations {
+                requiredDependency "fabric-api"
+                requiredDependency "cloth-config"
+            }
+        }
+        options {
+            forgeGradleIntegration = false
+            javaVersionAutoDetect = false
         }
     }
 }
