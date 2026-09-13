@@ -8,11 +8,11 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLevelEvents;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -88,8 +88,8 @@ public class EyeMineClientFabric implements ClientModInitializer {
             return true;
         });
 
-        // Server-side: Entity added to world
-        ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
+        // Reset local-player state on joins and respawns, including remote servers.
+        ClientEntityEvents.ENTITY_LOAD.register((entity, level) -> {
             for (var listener : EyeMineEvents.ENTITY_ADD.getListeners()) {
                 listener.onAdd(entity, level);
             }
