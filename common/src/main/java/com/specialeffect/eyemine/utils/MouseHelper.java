@@ -14,7 +14,6 @@ package com.specialeffect.eyemine.utils;
 import com.specialeffect.eyemine.mixin.MouseHandlerAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
-import net.minecraft.client.gui.screens.Overlay;
 import org.lwjgl.glfw.GLFW;
 
 public class MouseHelper {
@@ -55,13 +54,15 @@ public class MouseHelper {
 		return mHasPendingEvent;
 	}
 
-	public static boolean hasGLcontext() {
-		return !(Minecraft.getInstance().getOverlay() instanceof Overlay);
+	public static boolean canChangeMouseCapture() {
+		Minecraft minecraft = Minecraft.getInstance();
+		// Cursor operations belong on the client thread; overlays also suppress capture changes.
+		return minecraft.isSameThread() && minecraft.getOverlay() == null;
 	}
 
 	public static void setUngrabbedMode(boolean ungrabbed) {
 		ungrabbedMouseMode = ungrabbed;
-		if (!hasGLcontext()) {
+		if (!canChangeMouseCapture()) {
 			return;
 		}
 

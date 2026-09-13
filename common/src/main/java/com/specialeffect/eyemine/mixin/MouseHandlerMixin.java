@@ -408,7 +408,7 @@ public abstract class MouseHandlerMixin {
 	@Inject(method = "grabMouse()V", at = @At(value = "HEAD"), cancellable = true)
 	public void eyemine$grabMouse(CallbackInfo ci) {
 		EyeMine.LOGGER.debug("grabMouse");
-		if (!MouseHelper.hasGLcontext()) {
+		if (!MouseHelper.canChangeMouseCapture()) {
 			ci.cancel();
 		}
 	}
@@ -432,7 +432,7 @@ public abstract class MouseHandlerMixin {
 	 */
 	@Inject(at = @At("HEAD"), method = "releaseMouse()V", cancellable = true)
 	public void eyemine$releaseMouse(CallbackInfo ci) {
-		if (!MouseHelper.hasGLcontext()) {
+		if (!MouseHelper.canChangeMouseCapture()) {
 			ci.cancel();
 		}
 	}

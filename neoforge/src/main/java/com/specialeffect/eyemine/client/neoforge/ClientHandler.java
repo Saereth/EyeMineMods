@@ -118,11 +118,13 @@ public class ClientHandler {
     }
 
     public static void onSetup(FMLCommonSetupEvent event) {
-        EyeMineClient.setupComplete = true;
-        EyeMineClient.refresh();
-        Minecraft mc = Minecraft.getInstance();
-        for (var listener : EyeMineEvents.CLIENT_SETUP.getListeners()) {
-            listener.onClientSetup(mc);
-        }
+        event.enqueueWork(() -> {
+            EyeMineClient.setupComplete = true;
+            EyeMineClient.refresh();
+            Minecraft mc = Minecraft.getInstance();
+            for (var listener : EyeMineEvents.CLIENT_SETUP.getListeners()) {
+                listener.onClientSetup(mc);
+            }
+        });
     }
 }
