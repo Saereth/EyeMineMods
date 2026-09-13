@@ -194,9 +194,9 @@ public class NightVisionHelper extends SubMod {
 			Font font = mc.font;
 
 			int y = h / 5;
-			drawCenteredString(guiGraphics, font, msg1, w / 2, y, 0xffffff);
-			drawCenteredString(guiGraphics, font, msg2, w / 2, y + 20, 0xffffff);
-			drawCenteredString(guiGraphics, font, msg3, w / 2, y + 40, 0xffffff);
+			drawCenteredString(guiGraphics, font, msg1, w / 2, y, 0xffffffff);
+			drawCenteredString(guiGraphics, font, msg2, w / 2, y + 20, 0xffffffff);
+			drawCenteredString(guiGraphics, font, msg3, w / 2, y + 40, 0xffffffff);
 		}
 	}
 
