@@ -24,7 +24,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
@@ -65,7 +65,7 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public static void onRenderHud(RenderGuiLayerEvent.Post event) {
+    public static void onRenderHud(RenderGuiEvent.Post event) {
         for (var listener : EyeMineEvents.RENDER_HUD.getListeners()) {
             listener.onRenderHud(event.getGuiGraphics(), event.getPartialTick());
         }
