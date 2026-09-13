@@ -12,6 +12,12 @@ tasks.withType(AbstractArchiveTask).configureEach {
     archiveVersion.set('')
 }
 
+tasks.named('jar', Jar) {
+    from(rootProject.file('LICENSE')) {
+        rename { "${it}_${mod_name}" }
+    }
+}
+
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(java_version)
 }
