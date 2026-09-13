@@ -1,6 +1,7 @@
 package com.specialeffect.eyemine.platform.neoforge;
 
 import com.specialeffect.eyemine.packets.NetworkService;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -36,7 +37,10 @@ public class NeoForgeNetworkService implements NetworkService {
 
     @Override
     public void sendToServer(CustomPacketPayload payload) {
-        ClientPacketDistributor.sendToServer(payload);
+        var connection = Minecraft.getInstance().getConnection();
+        if (connection != null && connection.hasChannel(payload.type())) {
+            ClientPacketDistributor.sendToServer(payload);
+        }
     }
 
     public static Map<CustomPacketPayload.Type<?>, RegistrationEntry<?>> getPendingRegistrations() {

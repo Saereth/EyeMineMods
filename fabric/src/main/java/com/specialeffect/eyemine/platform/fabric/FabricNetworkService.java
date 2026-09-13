@@ -24,7 +24,9 @@ public class FabricNetworkService implements NetworkService {
 
     @Override
     public void sendToServer(CustomPacketPayload payload) {
-        ClientPlayNetworking.send(payload);
+        if (ClientPlayNetworking.canSend(payload.type())) {
+            ClientPlayNetworking.send(payload);
+        }
     }
 
     private record FabricPacketContext(ServerPlayNetworking.Context fabricContext) implements PacketContext {

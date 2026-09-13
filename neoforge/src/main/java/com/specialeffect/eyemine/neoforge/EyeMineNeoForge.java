@@ -39,7 +39,7 @@ public class EyeMineNeoForge {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     private void registerPayloads(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar(EyeMine.MOD_ID);
+        PayloadRegistrar registrar = event.registrar(EyeMine.MOD_ID).optional();
         for (var entry : NeoForgeNetworkService.getPendingRegistrations().values()) {
             registrar.playToServer(
                     entry.type(),
