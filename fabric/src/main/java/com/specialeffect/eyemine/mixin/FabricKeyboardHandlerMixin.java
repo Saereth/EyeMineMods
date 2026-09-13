@@ -22,8 +22,12 @@ public class FabricKeyboardHandlerMixin {
     @Final
     private Minecraft minecraft;
 
-    @Inject(method = "keyPress(JILnet/minecraft/client/input/KeyEvent;)V", at = @At("HEAD"))
+    // Vanilla must update KeyMapping's click count before listeners consume it.
+    @Inject(method = "keyPress(JILnet/minecraft/client/input/KeyEvent;)V", at = @At("TAIL"))
     private void eyemine$onKeyPress(long windowHandle, int action, KeyEvent keyEvent, CallbackInfo ci) {
+        if (windowHandle != minecraft.getWindow().handle()) {
+            return;
+        }
         for (var listener : EyeMineEvents.KEY_PRESSED.getListeners()) {
             EventResult result = listener.onKeyPressed(
                     minecraft, keyEvent.key(), keyEvent.scancode(), action, keyEvent.modifiers());
