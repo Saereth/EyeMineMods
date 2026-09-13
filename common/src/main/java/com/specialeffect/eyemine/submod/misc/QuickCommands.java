@@ -14,7 +14,7 @@ package com.specialeffect.eyemine.submod.misc;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Type;
 import com.specialeffect.eyemine.client.Keybindings;
-import com.specialeffect.eyemine.packets.messages.SendCommandMessage;
+import com.specialeffect.eyemine.packets.messages.ToggleDaylightCycleMessage;
 import com.specialeffect.eyemine.packets.messages.TeleportPlayerToSpawnPointMessage;
 import com.specialeffect.eyemine.submod.SubMod;
 import com.specialeffect.eyemine.submod.KeyInputUtil;
@@ -31,14 +31,10 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.gamerules.GameRules;
 import org.lwjgl.glfw.GLFW;
 
 public class QuickCommands extends SubMod {
 	public final String MODID = "quickcommands";
-
-	// Track day/night cycle toggle state locally since GameRules aren't accessible on client in 26.1.1
-	private boolean dayNightCycleEnabled = true;
 
 	private static KeyMapping mNightVisionKB;
 	private static KeyMapping mDayNightKB;
@@ -110,12 +106,7 @@ public class QuickCommands extends SubMod {
 		}
 
 		if (mDayNightKB.matches(new net.minecraft.client.input.KeyEvent(keyCode, scanCode, modifiers)) && mDayNightKB.consumeClick()) {
-			// Toggle the day/night cycle - track state locally since GameRules
-			// are not accessible on the client side in 26.1.1
-			dayNightCycleEnabled = !dayNightCycleEnabled;
-
-			String cmd = "/gamerule " + GameRules.ADVANCE_TIME.id() + " " + dayNightCycleEnabled;
-			Services.NETWORK.sendToServer(new SendCommandMessage(cmd));
+			Services.NETWORK.sendToServer(new ToggleDaylightCycleMessage());
 		}
 
 		if (mRespawnKB.matches(new net.minecraft.client.input.KeyEvent(keyCode, scanCode, modifiers)) && mRespawnKB.consumeClick()) {

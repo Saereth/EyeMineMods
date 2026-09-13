@@ -17,6 +17,7 @@ import com.specialeffect.eyemine.packets.messages.ChangeFlyingStateMessage;
 import com.specialeffect.eyemine.packets.messages.GatherBlockMessage;
 import com.specialeffect.eyemine.packets.messages.SendCommandMessage;
 import com.specialeffect.eyemine.packets.messages.TeleportPlayerToSpawnPointMessage;
+import com.specialeffect.eyemine.packets.messages.ToggleDaylightCycleMessage;
 import com.specialeffect.eyemine.platform.Services;
 
 public class PacketHandler {
@@ -25,6 +26,7 @@ public class PacketHandler {
 
 		net.registerC2S(AddItemToHotbar.ID, AddItemToHotbar.CODEC, AddItemToHotbar.Handler::handle);
 		net.registerC2S(SendCommandMessage.ID, SendCommandMessage.CODEC, SendCommandMessage.Handler::handle);
+		net.registerC2S(ToggleDaylightCycleMessage.ID, ToggleDaylightCycleMessage.CODEC, ToggleDaylightCycleMessage.Handler::handle);
 		net.registerC2S(TeleportPlayerToSpawnPointMessage.ID, TeleportPlayerToSpawnPointMessage.CODEC, TeleportPlayerToSpawnPointMessage.Handler::handle);
 		net.registerC2S(GatherBlockMessage.ID, GatherBlockMessage.CODEC, GatherBlockMessage.Handler::handle);
 		net.registerC2S(ActivateBlockAtPosition.ID, ActivateBlockAtPosition.CODEC, ActivateBlockAtPosition.Handler::handle);
