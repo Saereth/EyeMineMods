@@ -106,11 +106,8 @@ public abstract class MouseHandlerMixin {
 			target = "Lnet/minecraft/client/MouseHandler;ignoreFirstMove:Z",
 			ordinal = 0), cancellable = true)
 	public void eyemine$processOnMove(long handle, double xpos, double ypos, CallbackInfo ci) {
-		// Check if we're on a screen - if so, just update position and let vanilla handle it
+		// Let vanilla accumulate movement for screen hover and dragging.
 		if (this.minecraft.screen != null && this.minecraft.getOverlay() == null) {
-			this.xpos = xpos;
-			this.ypos = ypos;
-			ci.cancel();
 			return;
 		}
 
